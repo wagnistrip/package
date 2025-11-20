@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Allison&family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+body {
+  margin: 0;
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #ffffff;
+  color:#0a0a0a
+}
+
+.allisonfont {
+  font-family: "Allison", cursive;
+  /* font-weight: 400; */
+  font-style: normal;
+}
+
+
+.amirifont {
+  font-family: "Amiri", serif;
+  /* font-weight: 400; */
+  /* font-style: italic; */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+    font-family: "";
+}
+html{
+  scroll-behavior: smooth scroll;;
+}
+
+.linehight{
+  line-height: 47px;
+  color: #0a0a0a;
+  font-size: 36px;
+  font-weight: 400;
+}
+@media only screen and (max-width: 600px) {
+  .linehight{
+    line-height: 20px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+}
+
+
+.swiper-slide {
+  text-align: center;
+  /* background: transparent; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-prev:after, .swiper-button-next:after {
+  /* font-family: swiper-icons; */
+  font-size: 4px;
+  color: rgb(7, 7, 7);
+  /* text-transform: none !important; */
+  letter-spacing: 0;
+  /* font-variant: initial; */
+  line-height: 10px;
+  /* position: relative; */
+  width: 4rem;
+  height: 4rem;
+  /* border: 0.5px solid rgba(0, 0, 0, 0.26); */
+  /* border: 2px solid black; */
+  border-radius: 50%;
+  /* background-color: rgba(77, 59, 184, 0.155); */
+  /* font-weight: 900;
+  display: grid;
+  place-items: center; */
+  /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2); */
+  margin: 0 1rem;
+}
+
+
+#size {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Swiper Pagination Dots */
+.swiper-pagination-bullets {
+  bottom: 10px; /* Adjusts the vertical position */
+}
+
+.swiper-pagination-bullet {
+  width: 8px;  /* Adjusts the size of the dots */
+  height: 8px;
+  background: rgba(0, 0, 0, 0.5); /* Dot color */
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: black; /* Active dot color */
+  width: 10px; /* Slightly larger for active dot */
+  height: 10px;
+}
+
+
+.swiper-pagination-bullet {
+  background-color: black;
+  opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: blue;
+  opacity: 1;
+}
+
+
+.custom-border {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-border::before {
+  content: "";
+  position: absolute;
+  bottom: -10px; 
+  left: 16%; 
+  transform: translateX(-50%); 
+  width: 30%; 
+  border-bottom: 4px solid #6366f1; 
+}
+
+
+/* styles.css */
+.otp-input {
+  padding: 8px;
+  height: 40px;
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .otp-input {
+    padding: 4px;
+    height: 36px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ***********calender CSS******************** */
+.custom-input {
+   
+  border: none;
+  padding: 4px 12px;
+  background-color: transparent;
+  color: white;
+   font-weight: 600;
+   outline: none;
+  
+}
+
+.custom-input:focus {
+  outline: none;
+  box-shadow: none; 
+  border: none;
+}
+
+
+.loading-container {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: rgba(247, 247, 248, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  gap: 8px;
+}
+.dot {
+  width: 32px;
+  height: 32px;
+  background-color: #403e3e;
+  border-radius: 50%;
+  animation: fadeInOut 1s infinite alternate;
+}
+
+@keyframes fadeInOut {
+  0% {
+    background-color: #BDB3FD;
+  }
+  50% {
+    background-color: #A697FF;
+  }
+  100% {
+    background-color: #7661F5;
+  }
+}
+.only-text {
+  display: none; 
+
+}
+
+.form-check:hover .only-text {
+  display: inline-block; /* Show "Only" text when hovering over the checkbox container */
+}
