@@ -1,60 +1,109 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HotelHero from "../components/HotelHero";
 import CustomerFillData from "../components/CustomerFillData";
 import GuestDetailsForm from "../components/GuestDetailsForm";
 import CheckOuthoteldetails from "../components/CheckOuthoteldetails";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import PackageDetailsSkeleton from "../utils/api";
 
 const Checkoutpage = () => {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
   const [guestInfo, setGuestInfo] = useState([]);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
-  const { response } = location.state;
+  const response = location.state?.response;
+  useEffect(() => {
+    if (!response) {
+      navigate("/package-list");
+    }
+  }, [response, navigate]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2000); // 2 seconds
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen pb-6 w-full">
       <HotelHero title="Payment & Customer Info" />
+      {loading ? (
+        <div className=" mx-auto sm:w-[90%] px-3  lg:px-40 mt-1 sm:mt-10">
+          <PackageDetailsSkeleton />
+        </div>
+      ) : (
+        <div className="sm:w-[80%] flex flex-col w-full px-4 mt-10 sm:px-0 mx-0 sm:mx-auto">
+          {/* Step Progress Indicator */}
+          <ol className="flex items-center my-6 w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
+            <li
+              className={`flex md:w-full items-center text-indigo-600 dark:text-indigo-600 sm:after:content-[''] after:w-full after:h-1 after:border-b ${
+                step === 2 || step === 3
+                  ? "after:border-indigo-500"
+                  : "after:border-gray-300"
+              } after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10`}
+            >
+              <span className="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <svg
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                Personal{" "}
+                <span className="hidden sm:inline-flex sm:ms-2">details</span>
+              </span>
+            </li>
 
-      <div className="sm:w-[80%] flex flex-col w-full px-4 mt-10 sm:px-0 mx-0 sm:mx-auto">
-        {/* Step Progress Indicator */}
-        <ol className="flex items-center my-6 w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
-          <li
-            className={`flex md:w-full items-center text-indigo-600 dark:text-indigo-600 sm:after:content-[''] after:w-full after:h-1 after:border-b ${
-              step === 2 || step === 3
-                ? "after:border-indigo-500"
-                : "after:border-gray-300"
-            } after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10`}
-          >
-            <span className="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-              <svg
-                className="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-              </svg>
-              Personal{" "}
-              <span className="hidden sm:inline-flex sm:ms-2">details</span>
-            </span>
-          </li>
-
-          <li
-            className={`flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b ${
-              step === 3 ? "after:border-indigo-500" : "after:border-gray-300"
-            } after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10`}
-          >
-            <span
-              className={`flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-indigo-600 ${
-                step === 2 || step === 3 ? "text-indigo-600" : "text-gray-400"
-              }`}
+            <li
+              className={`flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b ${
+                step === 3 ? "after:border-indigo-500" : "after:border-gray-300"
+              } after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10`}
             >
               <span
-                className={`me-2 ${
+                className={`flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-indigo-600 ${
                   step === 2 || step === 3 ? "text-indigo-600" : "text-gray-400"
                 }`}
               >
-                {step === 2 || step === 3 ? (
+                <span
+                  className={`me-2 ${
+                    step === 2 || step === 3
+                      ? "text-indigo-600"
+                      : "text-gray-400"
+                  }`}
+                >
+                  {step === 2 || step === 3 ? (
+                    <svg
+                      className="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                    </svg>
+                  ) : (
+                    "2"
+                  )}
+                </span>
+                Payment{" "}
+                <span className="hidden sm:inline-flex sm:ms-2">details</span>
+              </span>
+            </li>
+
+            <li
+              className={`flex ${
+                step === 3 ? "text-indigo-600" : "text-gray-400"
+              } items-center`}
+            >
+              <span
+                className={`me-2 ${
+                  step === 3 ? "text-indigo-600" : "text-gray-400"
+                }`}
+              >
+                {step === 3 ? (
                   <svg
                     className="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5"
                     aria-hidden="true"
@@ -65,114 +114,86 @@ const Checkoutpage = () => {
                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
                   </svg>
                 ) : (
-                  "2"
+                  "3"
                 )}
               </span>
-              Payment{" "}
-              <span className="hidden sm:inline-flex sm:ms-2">details</span>
-            </span>
-          </li>
+              Confirmation
+            </li>
+          </ol>
 
-          <li
-            className={`flex ${
-              step === 3 ? "text-indigo-600" : "text-gray-400"
-            } items-center`}
-          >
-            <span
-              className={`me-2 ${
-                step === 3 ? "text-indigo-600" : "text-gray-400"
-              }`}
-            >
-              {step === 3 ? (
-                <svg
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-                </svg>
-              ) : (
-                "3"
-              )}
-            </span>
-            Confirmation
-          </li>
-        </ol>
-
-        <div className="w-full items-start flex sm:flex-row flex-col gap-x-6 gap-y-4 justify-between">
-          {step === 1 ? (
-            <div className="flex flex-col gap-y-6 w-full md:w-3/4">
-              <CheckOuthoteldetails />
-              <GuestDetailsForm
+          <div className="w-full items-start flex sm:flex-row flex-col gap-x-6 gap-y-4 justify-between">
+            {step === 1 ? (
+              <div className="flex flex-col gap-y-6 w-full md:w-3/4">
+                <CheckOuthoteldetails data={response} />
+                <GuestDetailsForm
                 setStep={setStep}
                 packagedata={response?.noOfRoom}
                 existingData={guestInfo}
                 setGuestInfo={setGuestInfo}
               />
-            </div>
-          ) : step === 2 ? (
-            <div className="flex flex-col gap-y-6 w-full md:w-3/4">
-              <CheckOuthoteldetails />
-              <CustomerFillData setStep={setStep} guestInfo={guestInfo} />
-
-              <div className="rounded-lg shadow-sm gap-y-3 sm:flex inline-block justify-between px-4 items-start gap-x-4 sm:items-center py-4 w-full border-[1px] bg-gradient-to-r to-[#f6f6e4] from-[#e3faf2] border-[#c2dac1]">
-                <div className="flex flex-row gap-x-3 items-start sm:items-center">
-                  <img
-                    className="w-10 h-10"
-                    src="https://cdn-icons-png.flaticon.com/512/6681/6681204.png"
-                    alt=""
-                  />
-                  <p className="text-[#000000] font-semibold text-sm sm:text-base">
-                    You have to use this wallet amount while login
-                  </p>
-                </div>
-                <button className="w-full sm:w-fit items-center mt-4 text-nowrap sm:mt-0 justify-center bg-indigo-500 hover:bg-indigo-600 rounded-full flex py-1.5 text-xs sm:text-sm font-bold text-white px-4">
-                  Log In
-                </button>
               </div>
+            ) : step === 2 ? (
+              <div className="flex flex-col gap-y-6 w-full md:w-3/4">
+               <CheckOuthoteldetails data={response} />
+                <CustomerFillData setStep={setStep} guestInfo={guestInfo} />
 
-              <div className="rounded-lg shadow-sm gap-y-3 sm:flex inline-block justify-between px-4 items-start gap-x-4 sm:items-center py-4 w-full">
-                <div className="flex flex-row gap-x-3 items-start sm:items-center">
-                  <p className="text-[#000000] font-semibold text-sm sm:text-base">
-                    Total Amt of checkout
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-end gap-x-6">
-                  <button
-                    onClick={() => setStep(step - 1)}
-                    type="button"
-                    className="text-sm w-full font-semibold leading-6 text-gray-900"
-                  >
-                    Cancel
-                  </button>
-
-                  <button
-                    onClick={() => setStep(step + 1)}
-                    className="w-full sm:w-fit items-center mt-4 text-nowrap sm:mt-0 justify-center bg-orange-500 hover:bg-orange-600 rounded-md flex py-1.5 text-xs sm:text-sm font-bold text-white px-4"
-                  >
-                    Pay ₹4300
+                <div className="rounded-lg shadow-sm gap-y-3 sm:flex inline-block justify-between px-4 items-start gap-x-4 sm:items-center py-4 w-full border-[1px] bg-gradient-to-r to-[#f6f6e4] from-[#e3faf2] border-[#c2dac1]">
+                  <div className="flex flex-row gap-x-3 items-start sm:items-center">
+                    <img
+                      className="w-10 h-10"
+                      src="https://cdn-icons-png.flaticon.com/512/6681/6681204.png"
+                      alt=""
+                    />
+                    <p className="text-[#000000] font-semibold text-sm sm:text-base">
+                      You have to use this wallet amount while login
+                    </p>
+                  </div>
+                  <button className="w-full sm:w-fit items-center mt-4 text-nowrap sm:mt-0 justify-center bg-indigo-500 hover:bg-indigo-600 rounded-full flex py-1.5 text-xs sm:text-sm font-bold text-white px-4">
+                    Log In
                   </button>
                 </div>
-              </div>
-            </div>
-          ) : step === 3 ? (
-            <div className="w-full items-center justify-center h-[60vh] flex">
-              <h2 className="text-xl font-semibold text-green-600">
-                ✅ Payment Successful! Booking Confirmed.
-              </h2>
-            </div>
-          ) : null}
 
-          {(step === 1 || step === 2) && (
-            <div className="min-h-60 w-full md:w-1/4">
-              <HotelPriceSummary />
-            </div>
-          )}
+                <div className="rounded-lg shadow-sm gap-y-3 sm:flex inline-block justify-between px-4 items-start gap-x-4 sm:items-center py-4 w-full">
+                  <div className="flex flex-row gap-x-3 items-start sm:items-center">
+                    <p className="text-[#000000] font-semibold text-sm sm:text-base">
+                      Total Amt of checkout
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-x-6">
+                    <button
+                      onClick={() => setStep(step - 1)}
+                      type="button"
+                      className="text-sm w-full font-semibold leading-6 text-gray-900"
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      onClick={() => setStep(step + 1)}
+                      className="w-full sm:w-fit items-center mt-4 text-nowrap sm:mt-0 justify-center bg-orange-500 hover:bg-orange-600 rounded-md flex py-1.5 text-xs sm:text-sm font-bold text-white px-4"
+                    >
+                      Pay ₹4300
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : step === 3 ? (
+              <div className="w-full items-center justify-center h-[60vh] flex">
+                <h2 className="text-xl font-semibold text-green-600">
+                  ✅ Payment Successful! Booking Confirmed.
+                </h2>
+              </div>
+            ) : null}
+
+            {(step === 1 || step === 2) && (
+              <div className="min-h-60 w-full md:w-1/4">
+                <HotelPriceSummary />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

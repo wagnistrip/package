@@ -8,7 +8,7 @@ const GuestDetailsForm = ({
   setGuestInfo,
 }) => {
   const [agreeTerms, setAgreeTerms] = useState(false);
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [guestData, setGuestData] = useState(() =>
     existingData?.guestData
       ? existingData.guestData
@@ -84,23 +84,22 @@ const [loading, setLoading] = useState(false);
   };
 
   // NEXT BUTTON
-const handleContinue = () => {
-  if (!validateForm()) return;
+  const handleContinue = () => {
+    if (!validateForm()) return;
 
-  setLoading(true); // start loader
+    setLoading(true); // start loader
 
-  setTimeout(() => {
-    const finalData = {
-      contactDetails,
-      guestData,
-    };
+    setTimeout(() => {
+      const finalData = {
+        contactDetails,
+        guestData,
+      };
 
-    setGuestInfo(finalData);
-    setStep(2); // navigate after 2 seconds
-    setLoading(false);
-  }, 2000);
-};
-
+      setGuestInfo(finalData);
+      setStep(2); // navigate after 2 seconds
+      setLoading(false);
+    }, 2000);
+  };
 
   useEffect(() => {
     if (!existingData) return;
@@ -136,7 +135,7 @@ const handleContinue = () => {
             <div key={roomIndex} className="mb-8 sm:mb-10 relative">
               {/* Circle */}
               <div className="absolute -left-[28px] sm:-left-[39px] flex flex-col items-center">
-                <div className="bg-[#009CFF] text-white font-semibold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex flex-col justify-center items-center shadow-md border-4 border-white">
+                <div className="bg-indigo-500 text-white font-semibold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex flex-col justify-center items-center shadow-md border-4 border-white">
                   <span className="text-[11px] sm:text-[13px] leading-none">
                     R
                   </span>
@@ -209,6 +208,7 @@ const handleContinue = () => {
                                 e.target.value
                               )
                             }
+                            placeholder="First name"
                           />
                           {errors[
                             `adult-${roomIndex}-${adultIndex}-firstName`
@@ -230,6 +230,7 @@ const handleContinue = () => {
                                 e.target.value
                               )
                             }
+                            placeholder="Last name"
                           />
                           {errors[
                             `adult-${roomIndex}-${adultIndex}-lastName`

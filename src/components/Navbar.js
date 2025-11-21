@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdFlight } from "react-icons/md";
 import { LiaHotelSolid } from "react-icons/lia";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxCross2 } from "react-icons/rx";
 import Login from "./Login";
@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadSession, logout } from "../redux/actions/authActions";
 const Navbar = () => {
   const [active, setActive] = useState(false);
-  const navigate = useNavigate();
   const handleLinkClick = () => {
     setActive(false);
   };
@@ -35,7 +34,6 @@ const Navbar = () => {
     };
   }, []);
 
-
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -58,7 +56,7 @@ const Navbar = () => {
     };
   }, [dispatch]);
 
-    const handleLogout = () => {
+  const handleLogout = () => {
     dispatch(logout());
   };
 
@@ -189,7 +187,7 @@ const Navbar = () => {
                     </div>
                   </Link>
                   <div className="block px-4 py-2 hover:bg-gray-100">
-                       <div className="flex flex-row justify-between">
+                    <div className="flex flex-row justify-between">
                       <p>Wallet</p>
                       <strong>{walletAmout}</strong>
                     </div>
@@ -200,15 +198,17 @@ const Navbar = () => {
                   >
                     Settings
                   </Link>
-                  <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
                     Logout
                   </button>
                 </div>
-              
               </div>
             ) : (
               <div>
-                <Link to="/login">Login / Signup</Link>
+                <button onClick={()=>setOpenModal(true)} type="button" className="hover:underline" >Login / Signup</button>
               </div>
             )}
           </div>

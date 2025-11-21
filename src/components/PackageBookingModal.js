@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { IoMdClose } from "react-icons/io";
 import { FiTrash2, FiInfo } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { RxCross2 } from "react-icons/rx";
 
 const PackageBookingModal = ({ open, onClose, packagedata }) => {
   const navigate = useNavigate();
@@ -90,6 +90,7 @@ const PackageBookingModal = ({ open, onClose, packagedata }) => {
 
   const handleBooking = () => {
     setLoadingContinue(true);
+    const date = selectedDate?.format("DD/MM/YYYY")
 
     // Calculate total adults & children
   const totalAdults = rooms.reduce((sum, room) => sum + room.adults, 0);
@@ -98,13 +99,14 @@ const PackageBookingModal = ({ open, onClose, packagedata }) => {
   const response = {
       noOfAdult: totalAdults,
       noOfChild: totalChildren,
+      packageDate : date,
       noOfRoom: rooms || 1,
       totalAmt: totalPrice || 0,
       packageData: packagedata,
     };
 
     console.log("response => ",response);
-    return;
+    // return;
 
     setTimeout(() => {
       navigate(
@@ -134,12 +136,7 @@ const PackageBookingModal = ({ open, onClose, packagedata }) => {
       <div className="bg-white rounded-xl w-[90%] max-w-3xl p-6 shadow-xl relative">
 
         {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-600 hover:text-black text-2xl"
-        >
-          <IoMdClose />
-        </button>
+        <button onClick={onClose} className="p-2 absolute top-4 ease-linear duration-200 right-4 rounded-md border bg-gray-100 hover:bg-indigo-500 hover:text-white"><RxCross2 size={20} /></button>
 
         {/* SCREEN 1 */}
         {!showSummary && (
@@ -257,10 +254,10 @@ const PackageBookingModal = ({ open, onClose, packagedata }) => {
             <button
               disabled={!canCalculate() || loadingCalculate}
               onClick={calculateTotal}
-              className={`w-full mt-6 py-3 rounded-lg text-lg font-semibold flex justify-center items-center
+              className={`w-full mt-6 py-3 rounded-lg text-lg font-medium flex justify-center items-center
                 ${
                   canCalculate() && !loadingCalculate
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    ? "bg-indigo-500 text-white hover:bg-indigo-600"
                     : "bg-gray-400 text-gray-200 cursor-not-allowed"
                 }`}
             >

@@ -1,10 +1,9 @@
-import { Link } from "react-router-dom";
 import PackageBookingModal from "./PackageBookingModal";
 import { useState } from "react";
 
 const HotelBookfare = ({ searchData, title }) => {
-  const id = title;
-const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const infoFields = [
     { label: "Package", value: searchData?.title },
     {
@@ -16,6 +15,15 @@ const [open, setOpen] = useState(false);
       value: `${searchData?.total_fare} / person`,
     },
   ];
+
+  const handleBookNow = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setOpen(true); // open modal after 2 sec
+    }, 2000);
+  };
 
   return (
     <div className="sm:bg-transparent rounded-lg w-full bg-opacity-90">
@@ -33,24 +41,20 @@ const [open, setOpen] = useState(false);
             </div>
           </div>
         ))}
-
-        {/* <Link
-          className="w-full"
-          to={`/packages/${searchData?.title
-            ?.toLowerCase()
-            ?.replace(/\s+/g, "-")
-            ?.replace(/[^\w-]+/g, "")}/checkout`}
-            state={{ searchData }}
-        > */}
-          <button
-           onClick={() => setOpen(true)}
-            type="button"
-            className="uppercase font-semibold sm:h-14 h-10 px-8 bg-blue-100 hover:bg-black hover:text-white transition-all duration-200 hover:bg-gradient-to-br mt-4 sm:mt-0 sm:bg-transparent w-full border-[1px] sm:border-[3px] border-black text-black rounded"
-          >
-            book now
-          </button>
+        <button
+          onClick={handleBookNow}
+          type="button"
+          disabled={loading}
+          className="uppercase font-semibold sm:h-14 h-10 px-8 bg-blue-100 hover:bg-black hover:text-white transition-all duration-200 hover:bg-gradient-to-br mt-4 sm:mt-0 sm:bg-transparent w-full border-[1px] sm:border-[3px] border-black text-black rounded"
+        >
+          {loading ? "Please wait..." : "Book Now"}
+        </button>
       </form>
-      <PackageBookingModal open={open} onClose={() => setOpen(false)} packagedata={searchData}  />
+      <PackageBookingModal
+        open={open}
+        onClose={() => setOpen(false)}
+        packagedata={searchData}
+      />
     </div>
   );
 };

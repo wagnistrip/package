@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Home from './pages/Home'
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Test from "./Test";
@@ -57,11 +56,8 @@ function App() {
 
     {loading && <LoadingScreen />}
       {!isNotFoundPage && <Navbar />}
-      {/* <Checkoutpage/> */}
        <ScrollToTop />
-      
       <Routes>
-        <Route path="/test" element={<Home />}></Route>
         <Route path="/package-list" element={<HotelListpage />}></Route>
         <Route path="/packages/:id" element={<HotelDetailspage />}></Route>
         <Route path="/packages/:id/checkout" element={<Checkoutpage />}></Route>

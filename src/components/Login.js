@@ -1,5 +1,3 @@
-
-
 import { Label, Modal } from "flowbite-react";
 import { useState,useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
@@ -33,8 +31,6 @@ const Login = ({openModal,setOpenModal}) => {
     setOtp(newValue);
   };
   return (
-    // <div className="h-screen flex items-center justify-center">
-    //   <Button className="text-black" onClick={() => setOpenModal(true)}>Toggle modal</Button>
       <Modal className="p-0 w-full" show={openModal}  popup onClose={() => setOpenModal(false)} >
         <div className="w-full">
         
@@ -108,7 +104,6 @@ const Login = ({openModal,setOpenModal}) => {
           </div>
         </div>
       </Modal>
-    // </div>
   );
 }
 export default Login

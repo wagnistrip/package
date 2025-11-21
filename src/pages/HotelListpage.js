@@ -1,5 +1,4 @@
 import HotelHero from "../components/HotelHero";
-// import Roomsearch from "../components/Roomsearch";
 import SortIcon from "@mui/icons-material/Sort";
 import CloseIcon from "@mui/icons-material/Close";
 import RoomCard from "../components/RoomCard";

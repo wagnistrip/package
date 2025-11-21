@@ -26,7 +26,7 @@ import RoomAmenities from "../components/RoomAmenities";
 import HotelBookfare from "../components/HotelBookfare";
 import Hotelequiry from "../components/Hotelequiry";
 import HotelRoomdetails from "../components/HotelRoomdetails";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import PackageDetailsSkeleton from "../utils/api";
 
@@ -54,9 +54,16 @@ const amenities = [
 
 const HotelDetailspage = () => {
   const [active, setActive] = useState("hotelDetails");
+  const navigate = useNavigate();
   const location = useLocation();
-  const { pkg } = location.state || {};
+  const pkg = location.state?.pkg;
   const [loading, setLoading] = useState(true);
+
+   useEffect(() => {
+    if (!pkg) {
+      navigate("/package-list");
+    }
+  }, [pkg, navigate]);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2000); // 2 seconds
@@ -90,19 +97,19 @@ const HotelDetailspage = () => {
                 </h3>
                 <div className="flex flex-col gap-y-3">
                   <div className="flex flex-row gap-x-2 items-center ">
-                    <MdRadioButtonChecked size={20} />{" "}
+                    <MdRadioButtonChecked className="text-indigo-500" size={20} />{" "}
                     <label className="text-sm sm:text-base xl:text-lg text-[#656565]">
                       Smoking not allowed
                     </label>
                   </div>
                   <div className="flex flex-row gap-x-2 items-center ">
-                    <MdRadioButtonChecked size={20} />{" "}
+                    <MdRadioButtonChecked className="text-indigo-500"  size={20} />{" "}
                     <label className="text-sm sm:text-base xl:text-lg text-[#656565]">
                       Pets not allowed
                     </label>
                   </div>
                   <div className="flex flex-row gap-x-2 items-center ">
-                    <MdRadioButtonChecked size={20} />{" "}
+                    <MdRadioButtonChecked className="text-indigo-500"  size={20} />{" "}
                     <label className="text-sm sm:text-base xl:text-lg text-[#656565]">
                       Swimming pool closed from 8.00pm - 6.00am
                     </label>
